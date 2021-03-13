@@ -1,6 +1,6 @@
 # Meedia-tsõõr
 
-Tsõõri kujuline arvuti sisesnd seade.
+Tsõõri kujuline arvuti sisesndseade.
 
 Arduino Pro Micro saab programmeerida matkima kõiki USB seadmeid. Nagu see oleks hiir, klaviatuur või mõni muu HID tüüpi USB seade.
 
