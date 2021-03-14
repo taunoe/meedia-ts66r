@@ -1,6 +1,6 @@
 /*
  * File         tauno_rotary_encoder.h
- * Last edited  13.03.2021
+ * Last edited  14.03.2021
  * 
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
@@ -44,11 +44,15 @@ class Tauno_Rotary_Encoder {
   // Destructor
   ~Tauno_Rotary_Encoder();
 
+  void begin();  // input pullups
+
   void say_pins();  // only for testing
 
   uint8_t read();
 
   uint16_t speed();
+
+  bool button();
 };
 
 

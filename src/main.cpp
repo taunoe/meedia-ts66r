@@ -3,7 +3,7 @@
  * Projeckt  Media Dial
  * Board     Arduino Pro Micro 5v/16Mhz
  * Hardware  Rotary encoder, Pixel Ring 12 x RGB LED
- * Edited    13.03.2021
+ * Edited    14.03.2021
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
  * 
@@ -28,42 +28,30 @@ const int RE_DT_PIN  = 5;
 Tauno_Rotary_Encoder rotary_encoder(RE_SW_PIN, RE_CLK_PIN, RE_DT_PIN);
 
 
-const int RXLED = 17;
-
 void setup() {
   Serial.begin(9600);
 
-  pinMode(RXLED, OUTPUT);
+  rotary_encoder.begin();
 }
 
 void loop() {
-  /*digitalWrite(RXLED, HIGH);
-  TXLED1;
-  delay(500);
-
-  digitalWrite(RXLED, LOW);
-  TXLED0;
-  delay(500);*/
-
-  int a = rotary_encoder.read();
+  int r = rotary_encoder.read();
   uint16_t s = rotary_encoder.speed();
 
-  if (a == DIR_CW) {
+  if (r == DIR_CW) {
     Serial.print(">");
     // Keyboard.write('z');
     Serial.println(s);
     // Mouse.move(0, 0, 1);
-  } else if (a == DIR_CCW) {
+  } else if (r == DIR_CCW) {
     Serial.print("<");
     // Keyboard.write('k');
     Serial.println(s);
     // Mouse.move(0, 0, -1);
   }
-}
-/*
-inline void setPeriod(uint16_t t) {
-  uint16_t  _period;  // velocity calculation period
-  if ((t != 0) && (t <= 1000)) {
-    _period = t;
+
+  int b = rotary_encoder.button();
+  if (b) {
+    Serial.print("Button");
   }
-}*/
+}

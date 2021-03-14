@@ -1,6 +1,6 @@
 /*
  * File         tauno_rotary_encoder.cpp
- * Last edited  13.03.2021
+ * Last edited  14.03.2021
  * 
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
@@ -25,7 +25,16 @@ Tauno_Rotary_Encoder::Tauno_Rotary_Encoder(
 
 // Destructor
 Tauno_Rotary_Encoder::~Tauno_Rotary_Encoder() {
-  Serial.print("Tauno Rotary Encoder Destructor!");
+  // Cleanup
+}
+
+/*
+ *  Call it on setup()
+ */
+void Tauno_Rotary_Encoder::begin() {
+  pinMode(new_CLK_PIN, INPUT_PULLUP);
+  pinMode(new_DT_PIN, INPUT_PULLUP);
+  pinMode(new_SW_PIN, INPUT_PULLUP);
 }
 
 
@@ -105,4 +114,24 @@ void Tauno_Rotary_Encoder::count_speed() {
  */
 uint16_t Tauno_Rotary_Encoder::speed() {
   return _last_speed;
+}
+
+
+bool Tauno_Rotary_Encoder::button() {
+  /**
+   * The static keyword is used to create variables that are visible to only one function. 
+   * However unlike local variables that get created and destroyed every time a function is called, 
+   * static variables persist beyond the function call, preserving their data between function calls.
+   * Variables declared as static will only be created and initialized the first time a function is called. 
+   **/
+  // static uint8_t old_a = 0;
+
+  uint8_t read = digitalRead(new_SW_PIN);
+  boolean status = false;
+
+  if (read == 0) {
+    status = true;
+  }
+
+  return status;
 }
