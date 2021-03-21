@@ -4,6 +4,9 @@
  * 
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
+ * 
+ * Insp: https://github.com/MajicDesigns/MD_REncoder
+ * INterrupt: https://arduinoplusplus.wordpress.com/2021/02/05/interrupts-and-c-class-instances/
  */
 
 #ifndef LIB_TAUNO_ROTARY_ENCODER_TAUNO_ROTARY_ENCODER_H_
