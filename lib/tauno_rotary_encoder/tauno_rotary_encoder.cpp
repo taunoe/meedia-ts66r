@@ -1,12 +1,16 @@
 /*
  * File         tauno_rotary_encoder.cpp
- * Last edited  14.03.2021
+ * Last edited  21.03.2021
  * 
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
  */
 
 #include <Arduino.h>
+
+//#define DEBUG
+#include "../../include/tauno_debug.h"
+
 #include "tauno_rotary_encoder.h"
 
 // Constructor
@@ -62,32 +66,103 @@ uint8_t Tauno_Rotary_Encoder::read() {
    * static variables persist beyond the function call, preserving their data between function calls.
    * Variables declared as static will only be created and initialized the first time a function is called. 
    **/
+/*
+  Gray code state machine:
+  CW:
+  Position  Bit-A Bit-B
+         0  0     0
+       1/4  1     0
+       1/2  1     1
+       3/4  0     1
+         1  0     0
+  CCW:
+  Position  Bit-A Bit-B
+         0  0     0
+       1/4  0     1
+       1/2  1     1
+       3/4  1     0
+         1  0     0
+*/
+
+  uint8_t return_value = 0;
   static uint8_t old_a = 0;
   static uint8_t old_b = 0;
 
-  uint8_t status = 0;
+  // Lets store pin states to check  rotate direction:
+  //  CW A=1,1,0 B=0,1,1
+  // CCW A=0,1,1 B=1,1,0
+  static uint8_t a_states = 0b00000000;
+  static uint8_t b_states = 0b00000000;
+
+  // Read pins
   uint8_t new_a = digitalRead(new_CLK_PIN);
   uint8_t new_b = digitalRead(new_DT_PIN);
 
+  uint8_t i = 0;
   // If the value of CLK pin or the DT pin has changed
   if (new_a != old_a || new_b != old_b) {
-    if (old_a == 1 && new_a == 0) {
-      status = (old_b * 2 - 1);
+    DEBUG_PRINT("a=");
+    DEBUG_PRINT(new_a);
+    DEBUG_PRINT(" b=");
+    DEBUG_PRINTLN(new_b);
+
+    /* ver 3 */
+    // shift values left
+    a_states = a_states << 1;
+    b_states = b_states << 1;
+    // add new value at end
+    a_states |= new_a;
+    b_states |= new_b;
+
+    //Serial.println(a_states, BIN);
+    //Serial.println(b_states, BIN);
+    // compare
+
+    // CW
+    if ((a_states & 0b00001100) == 0b00001100
+     && (b_states & 0b00000110) == 0b00000110) {
+       DEBUG_PRINTLN("Paremale");
+       return_value = 1;
     }
+    // CCW
+    if ((b_states & 0b00001100) == 0b00001100
+     && (a_states & 0b00000110) == 0b00000110) {
+       DEBUG_PRINTLN("Vasakule");
+       return_value = 255;
+     }
+
+
+    /* ver 1
+    if (old_a == 1 && new_a == 0) {
+      return_value = (old_b * 2 - 1);
+    }
+    */
+    /* ver 2
+    if (old_a == 1 && old_b == 1) {
+      if (new_a == 1 && new_b == 0) {
+        DEBUG_PRINTLN("__<<");
+      }
+      if (new_b == 1 && new_a == 0) {
+        DEBUG_PRINTLN("__>>");
+      }
+    }
+    */
+
   }
 
   old_a = new_a;
   old_b = new_b;
 
-  count_clicks(status);
+  count_clicks(return_value);
   count_speed();
 
-  return status;
+  return return_value;
 }
 
 
 /*
  *  Counts rotary encoder clicks.
+ *  Helps calculate speed.
  */
 void Tauno_Rotary_Encoder::count_clicks(uint8_t status) {
   if (status != 0) {

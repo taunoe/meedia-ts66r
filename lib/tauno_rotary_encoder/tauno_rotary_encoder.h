@@ -6,6 +6,7 @@
  * https://taunoerik.art/
  * 
  * Insp: https://github.com/MajicDesigns/MD_REncoder
+ *       http://www.buxtronix.net/2011/10/rotary-encoders-done-properly.html
  * INterrupt: https://arduinoplusplus.wordpress.com/2021/02/05/interrupts-and-c-class-instances/
  */
 
