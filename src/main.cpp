@@ -17,7 +17,7 @@
 // https://github.com/arduino-libraries/Mouse
 // https://www.arduino.cc/reference/en/language/functions/usb/mouse/
 
-#define DEBUG
+//#define DEBUG
 
 #include "tauno_debug.h"
 #include "tauno_rotary_encoder.h"
@@ -50,7 +50,7 @@ void pixels_routine(uint8_t delay) {
 
     if (_i < LEDS_NUM) {
       DEBUG_PRINT(" prev_millis=");
-      DEBUG_PRINT(_prev_millis);
+      DEBUG_PRINTLN(_prev_millis);
       pixels.setPixelColor(_i, pixels.Color(150, 0, 0));
       pixels.show();
       _prev_millis = millis();

@@ -1,6 +1,6 @@
 /*
  * File         tauno_rotary_encoder.cpp
- * Last edited  21.03.2021
+ * Last edited  25.03.2021
  * 
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
@@ -114,24 +114,49 @@ uint8_t Tauno_Rotary_Encoder::read() {
     a_states |= new_a;
     b_states |= new_b;
 
-    //Serial.println(a_states, BIN);
-    //Serial.println(b_states, BIN);
+    // Serial.println(a_states, BIN);
+    // Serial.println(b_states, BIN);
     // compare
 
-    // CW
+    // CW 1 half stepp
+    if ((a_states & 0b00000011) == 0b00000011
+     && (b_states & 0b00000001) == 0b00000001) {
+       DEBUG_PRINTLN("Paremale");
+       return_value = 1;
+    }
+    // CW 2 half stepp
+    if ((a_states & 0b00000010) == 0b00000010
+     && (b_states & 0b00000011) == 0b00000011) {
+       DEBUG_PRINTLN("Paremale");
+       return_value = 1;
+    }
+    // CCW 1 half stepp
+    if ((b_states & 0b00000011) == 0b00000011
+     && (a_states & 0b00000001) == 0b00000001) {
+       DEBUG_PRINTLN("Vasakule");
+       return_value = 255;
+     }
+    // CCW 2 half stepp
+    if ((b_states & 0b00000010) == 0b00000010
+     && (a_states & 0b00000011) == 0b00000011) {
+       DEBUG_PRINTLN("Vasakule");
+       return_value = 255;
+     }
+
+/*
+    // CW full stepp
     if ((a_states & 0b00001100) == 0b00001100
      && (b_states & 0b00000110) == 0b00000110) {
        DEBUG_PRINTLN("Paremale");
        return_value = 1;
     }
-    // CCW
+    // CCW full stepp
     if ((b_states & 0b00001100) == 0b00001100
      && (a_states & 0b00000110) == 0b00000110) {
        DEBUG_PRINTLN("Vasakule");
        return_value = 255;
      }
-
-
+*/
     /* ver 1
     if (old_a == 1 && new_a == 0) {
       return_value = (old_b * 2 - 1);
