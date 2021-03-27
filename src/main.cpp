@@ -3,7 +3,7 @@
  * Projeckt  Media Dial
  * Board     Arduino Pro Micro 5v/16Mhz
  * Hardware  Rotary encoder, Pixel Ring 12 x RGB LED
- * Edited    23.03.2021
+ * Edited    27.03.2021
  * Copyright 2021 Tauno Erik
  * https://taunoerik.art/
  * 
@@ -29,6 +29,7 @@ const uint8_t LEDS_NUM = 12;
 
 const uint8_t loop_interval = 500;
 
+// 12 Bit WS2812 5050 RGB LED Ring
 Adafruit_NeoPixel pixels(LEDS_NUM, LEDS_PIN, NEO_GRB + NEO_KHZ800);
 
 // Rotary Encoder pins
