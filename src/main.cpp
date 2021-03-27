@@ -52,7 +52,7 @@ void pixels_routine(uint8_t delay) {
     if (_i < LEDS_NUM) {
       DEBUG_PRINT(" prev_millis=");
       DEBUG_PRINTLN(_prev_millis);
-      pixels.setPixelColor(_i, pixels.Color(150, 0, 0));
+      pixels.setPixelColor(_i, pixels.Color(0, 200, 0));  // (R, G, B)
       pixels.show();
       _prev_millis = millis();
       _i++;

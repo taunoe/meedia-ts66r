@@ -8,7 +8,7 @@ Arduino Pro Micro saab programmeerida matkima kõiki USB seadmeid. Nagu see olek
 
 Kood on kataloogis [src/](src/).
 
-Eraldi on loodud teek Rotary Encoderi jaoks kataloogis [lib/](lib/).
+Eraldi on loodud teek pöördkooderi (Rotary Encoder) jaoks kataloogis [lib/](lib/).
 
 Kataloogis [include/](include/) on debug päisefail.
 
