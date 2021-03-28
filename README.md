@@ -16,6 +16,8 @@ Kataloogis [include/](include/) on debug päisefail.
 
 Pildid on kataloogis [img/](img/).
 
+![Media tsõõr](img/IMG_20210328_111222.jpg)
+
 ![Detailid](img/IMG_20210322_202354.jpg)
 
 ## Skeem
